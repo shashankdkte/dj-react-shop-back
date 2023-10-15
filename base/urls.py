@@ -8,6 +8,6 @@ urlpatterns = [
     path("", views.getRoutes, name="routes"),
     path("products/",views.get_products,name="products"),
     path("products/<str:pk>",views.get_single_product,name="product_value"),
-    path('users/login', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('users/login', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
 ]
 
