@@ -2,9 +2,9 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAdminUser,IsAuthenticated
-from .models import Product
+
 from django.contrib.auth.models import User
-from .serializers import ProductSerializer,UserSerializerWithToken,UserSerializer
+from base.serializers import UserSerializerWithToken,UserSerializer
 # Create your views here.
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -25,22 +25,6 @@ class MyTokenObtainPairView(TokenObtainPairView):
    serializer_class = MyTokenObtainPairSerializer
 
 
-
-@api_view(['GET'])
-def getRoutes(request):
-  routes = [
-    '/api/products/',
-    '/api/products/create/',
-    '/api/products/upload/',
-    '/api/products/<id>/reviews/',
-    '/api/products/top/',
-    '/api/products/<id>/',
-    '/api/products/delete/<id>/',
-    '/api/products/<update>/<id>/',
-
-  ]
-  return Response(routes)
-
 @api_view(['POST'])
 def registerUser(request):
   data = request.data
@@ -49,7 +33,7 @@ def registerUser(request):
       first_name = data['name'],
       username=data['email'],
       email = data['email'],
-      password = data['password']
+      password = make_password(data['password'])
     )
     serializer = UserSerializerWithToken(user,many=False)
     return Response(serializer.data)
@@ -64,6 +48,26 @@ def getUserProfile(request):
   serializer =UserSerializer(user,many=False)
   return Response(serializer.data)
 
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateUserProfile(request):
+  user = request.user
+  serializer = UserSerializerWithToken(user,many=False)
+
+  data = request.data
+  user.first_name = data['name']
+  user.username = data['email']
+  user.email = data['email']
+
+  if data['password'] != '':
+    user.password = make_password(data['password'])
+
+  user.save()
+
+  return Response(serializer.data)
+
+
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
 def getUsers(request):
@@ -77,17 +81,4 @@ def getUsers(request):
 def getUserById(request,pk):
   user = User.objects.get(id=pk)
   serializer =UserSerializer(user,many=False)
-  return Response(serializer.data)
-
-@api_view(['GET'])
-def get_products(request):
-  products = Product.objects.all()
-  serializer = ProductSerializer(products,many=True)
-  return Response(serializer.data)
-
-@api_view(['GET'])
-def get_single_product(request,pk):
-  product = Product.objects.get(_id=pk)
-  print(product)
-  serializer = ProductSerializer(product,many=False)
   return Response(serializer.data)
