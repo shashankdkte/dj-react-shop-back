@@ -15,6 +15,7 @@ from datetime import datetime
 def addOrderItems(request):
   user = request.user
   data = request.data
+  print(data)
 
   orderItems = data['orderItems']
 
@@ -25,10 +26,10 @@ def addOrderItems(request):
     # 1 Create Order
     order = Order.objects.create(
       user = user,
-      paymentMethod = data['paymentMethod'],
-      taxPrice = data['taxPrice'],
-      shippingPrice = data['shippingPrice'],
-      totalPrice = data['totalPrice']
+      payment_method = data['paymentMethod'],
+      tax_price = data['taxPrice'],
+      shipping_price = data['shippingPrice'],
+      total_price = data['totalPrice']
     )
 
     # 2 Create Shipping Address
@@ -36,7 +37,7 @@ def addOrderItems(request):
       order = order,
       address = data['shippingAddress']['address'],
       city=data['shippingAddress']['city'],
-      postalCode=data['shippingAddress']['postalCode'],
+      postal_code=data['shippingAddress']['postalCode'],
       country=data['shippingAddress']['country'],
 
     )
@@ -50,7 +51,7 @@ def addOrderItems(request):
         product = product,
         order = order,
         name=product.name,
-        quantity = i['quantity'],
+        quantity = i['qty'],
         price = i['price'],
         image = product.image.url
       )
