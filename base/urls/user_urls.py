@@ -10,7 +10,7 @@ urlpatterns = [
     path('profile/',views.getUserProfile,name="users-profile"),
     path('profile/update/',views.updateUserProfile,name="users-profile-update"),
     path('register/',views.registerUser,name='register'),
-    path('<str:pk>/',views.getUserById,name="user")
-
+    path('<str:pk>/',views.getUserById,name="user"),
+    path('delete/<str:pk>/',views.deleteUser,name="user-delete")
 ]
 
