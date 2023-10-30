@@ -47,3 +47,22 @@ def deleteProduct(request, pk):
     product = Product.objects.get(_id=pk)
     product.delete()
     return Response('Producted Deleted')
+
+
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def createProduct(request):
+   user = request.user
+
+   product = Product.objects.create(
+      user=user,
+      name='Sample Name',
+      price=0,
+      brand='Sample Brand',
+      count_in_stock=0,
+      category='Sample Category',
+      description='',
+      rating=2,
+   )
+   serializer = ProductSerializer(product, many=False)
+   return Response(serializer.data)
