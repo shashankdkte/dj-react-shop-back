@@ -39,15 +39,14 @@ class UserSerializerWithToken(UserSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-  reviews = serializers.SerializerMethodField(read_only = True)
-
   class Meta:
     model = Review
-    fields = '_all__'
+    fields = '__all__'
 
 
 
 class ProductSerializer(serializers.ModelSerializer):
+  reviews = serializers.SerializerMethodField(read_only = True)
   class Meta:
     model = Product
     fields = '__all__'
