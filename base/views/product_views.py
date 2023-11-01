@@ -63,6 +63,12 @@ def getTopProducts(request):
    return Response(serializer.data)
 
 @api_view(['GET'])
+def getdTopProducts(request):
+   products = Product.objects.filter(rating__gte=4).order_by('-rating')[0:5]
+   serializer = ProductSerializer(products,many=True)
+   return Response(serializer.data)
+
+@api_view(['GET'])
 def get_single_product(request,pk):
   product = Product.objects.get(_id=pk)
   print(product)
