@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-j9x88bomn5uygn=1rzx6m0(=j$6(_ob#&8g)^1=)_w^^(0r#i3
 DEBUG = True
 
 ALLOWED_HOSTS = [
+  '127.0.0.1',
   '.vercel.app'
 ]
 
@@ -33,14 +34,15 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
-    'base.apps.BaseConfig',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
+    'rest_framework',
+    'base.apps.BaseConfig'
 ]
 REST_FRAMEWORK = {
 
