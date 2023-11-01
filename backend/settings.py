@@ -130,8 +130,21 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': 'ooegthfh',
+    #     'USER': 'ooegthfh',
+    #    'PASSWORD': 'yCc_mSYnmJGcy5D-GwvDn_85woxuG684',
+    #    'HOST': 'arjuna.db.elephantsql.com',
+    #    'PORT': 5432,
+    #  'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+
+    'ENGINE': 'django.db.backends.postgresql',
+       'NAME': 'railway',
+       'USER': 'postgres',
+       'PASSWORD': 'bFGcFFbdECF6Ga*b2ggf3b4aed*ABaDD',
+       'HOST': 'viaduct.proxy.rlwy.net',
+       'PORT': 11620,
     }
 }
 
